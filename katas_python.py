@@ -331,20 +331,82 @@ print(int(num_final),"\n")
 # 18.- Escribe un programa que cree una lista de diccionarios que contenga información de estudiantes 
 # (nombre, edad, calificacion) y use la funcion filter para extraer a los estudiantes con una calificacion mayor o igual a 90. 
 
+#Creamos lista vacía para guardar los datos de los estudiantes
+lista_estudiantes = []
+
+#Bucle para solicitar los datos de los estudiantes (3)
+for i in range (1,4):
+     nombre = input("Ingrese nombre: ")
+     edad = int(input("Ingrese edad: "))
+     calificacion = float(input("Ingrese calificación: "))
+     #Añadimos los datos a la lista como un diccionario
+     lista_estudiantes.append({
+          "nombre": nombre,
+          "edad": edad,
+          "calificacion": calificacion}) 
+#Aplicamos filter con lambda para filtrar los de calificaciones > 90
+estudiantes_destacados = list(filter(lambda x : x["calificacion"]>= 90, lista_estudiantes))
+print(f"Los estudiantes con mayores calificaciones son {estudiantes_destacados}\n")
+
 
 # 19.- Crea una función lambda que filtre los números impares de una lista dada
 
+lista_dada = [12,56,55,87,31,88] #Lista con varios números
+#Filter con lambda que evalúa si el número es impar, si es True lo mantiene en la nueva lista
+filtra_lamb = list(filter(lambda x: True if x % 2 != 0 else False, lista_dada))
+print(filtra_lamb,"\n")
+
 # 20.- Para una lista con elementos tipo int y str, obten una nueva lista solo con los valores int. Usa la función filter()
+
+mix_tipo = [23, "hola",1245, 89, "conejo", "21"] # Lista con un mix de int y str
+# lambda que verifica si es int y lo mantiene en la nueva lista si lo es.
+solo_ints = list(filter(lambda x: isinstance(x, int), mix_tipo))
+print(solo_ints,"\n")
 
 # 21.- Crea un función que calcule el cubo de un número dado mediante una función lambda
 
-# 22.- Dada una lista numérica, obtçen el producto total de los valores de dicha lista. Usa la función reduce()
+num_dado = 3
+# lambda que devuelve el cubo de un numero dado
+num_cubo = lambda x: x**3
+print(num_cubo(num_dado),"\n")
+
+# 22.- Dada una lista numérica, obten el producto total de los valores de dicha lista. Usa la función reduce()
+
+from functools import reduce
+
+numerica = [8, 5, 6, 4, 2]
+# usamos reduce para calcular el producto total de los vcalores de la lista 
+#lambda, multiplica el acumulador x por el siguiente elemento
+resultado_reduce = reduce(lambda x,y : x * y, numerica)
+print(resultado_reduce)
 
 # 23.- Concatena una lista de palabras. Usa la función reduce()
 
+palab_list = ["este ", "tiempo ","esta ","pasando"]
+# Usamos reduce() para concatenar las palabra sumandolas
+# lambda, suma el acumulador x con el siguiente elemento
+concatenadas = reduce(lambda x,y : x + y, palab_list)
+print(concatenadas,"\n")
+
 # 24.- Calcula la diferencia total en los valores de una lista. Usa la función reduce()
 
+valores = [300, 50, 20, 10]
+# Usamos reduce() para calcular la diferencia total de los valores
+# lambda, resta del acumulador x  el siguiente elemento
+difer_valores = reduce(lambda x, y : x - y, valores)
+print(f"La diferencia total de los valores es: {difer_valores}\n")
+
 # 25.- Crea una función que cuente el número de caracteres en una cadena de texto dada.add()
+def cuenta_caracteres_distintos(cadena):
+    """Devuelve el número de caracteres distintos en la cadena dada."""
+    caracteres = set()
+    for c in cadena:
+        caracteres.add(c)
+    return len(caracteres)
+
+texto = "Hola, Mª Cruz"
+print(cuenta_caracteres_distintos(texto))  # Salida: número de caracteres únicos
+
 
 # 26.- Crea una función lambda que calcule el resto de la división entre dos números dados.
 
@@ -473,3 +535,8 @@ print(int(num_final),"\n")
                # 5. Muestra el precio final de la compra, teniendo en cuenta el descuento aplicado o sin él.
                # 6. Recuerda utilizar estructuras de control de flujo como if, elif y else para llevar a cabo estas acciones en tu
                # programa de Python.
+               
+               
+
+
+
