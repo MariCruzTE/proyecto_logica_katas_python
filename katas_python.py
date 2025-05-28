@@ -337,7 +337,7 @@ lista_estudiantes = []
 #Bucle para solicitar los datos de los estudiantes (3)
 for i in range (1,4):
      nombre = input("Ingrese nombre: ")
-     edad = int(input("Ingrese edad: "))
+     edad = input("Ingrese edad: ")
      calificacion = float(input("Ingrese calificación: "))
      #Añadimos los datos a la lista como un diccionario
      lista_estudiantes.append({
@@ -405,32 +405,154 @@ def cuenta_caracteres_distintos(cadena):
     return len(caracteres)
 
 texto = "Hola, Mª Cruz"
-print(cuenta_caracteres_distintos(texto))  # Salida: número de caracteres únicos
+print(cuenta_caracteres_distintos(texto),"\n")  # Salida: número de caracteres únicos
 
 
 # 26.- Crea una función lambda que calcule el resto de la división entre dos números dados.
 
+# lambda que devuelve el resto de dos números
+resto = lambda x , y : x % y
+print(resto(8,2),"\n")
+
 # 27.- Crea una función que calcule el promedio de una lista de números
 
+lista_prome = [ 5, 6, 7, 15, 23, 84]
+# Usamos reduce para sumar todos los elementos
+suma_total = reduce(lambda x , y : x + y,lista_prome)
+#calculamos promedio
+promedio = suma_total / len(lista_prome)
+print(promedio,"\n")
+
+
 # 28.- Crea una función que busque y devuelva el primer elemento duplicado en una lista dada.
+
+def duplicado (lista):
+    """Devuelve el primer elemento duplicado en una lista dada
+
+    Args:
+        lista (Any): Lista a evaluar
+
+    Returns:
+        Any: Primer elemento duplicado de la lista
+    """
+    box = []
+    for elemento in lista:
+        if elemento in box:
+            return f"El primer elemento duplicado es: {elemento}\n"
+        else:
+            box.append(elemento)
+    return "No hay duplicados en las lista. \n"
+
+lista_duplicados = [4,3,6,8,4,3,7,1,9]   
+print(duplicado(lista_duplicados))
 
 
 # 29.- Crea una función que convierta una variable en una cadena de texto y enmascare todos los caracteres 
 # con el carácter '#', excepto los últimos cuatro.
 
+def anonimus (var):
+    """Convierte una variable a str y enmascara todos sus elementos
+       menos los 4 últimos
+
+    Args:
+        var (Any): Variable a convertir y enmascarar
+
+    Returns:
+        str: con todos los elementos como "#" menos los 4 últimos
+    """
+    var = str(var)
+    almoadilla_str = ""
+    mascara = ""
+    
+    if len(var) > 4:
+        almoadilla_str = "#" * (len(var) - 4)
+        mascara = var[-4:]
+    else:
+        mascara = var
+    return almoadilla_str+mascara   
+
+para_enmascarar = 45248545631704
+print(anonimus(para_enmascarar),"\n")      
+
 
 # 30.- Crea una función que determine si dos palabras son anagramas, es decir, si están formadas por las mismas letras
 # pero en diferente orden.
 
+def son_anagrama (pal1, pal2):
+    """Comprueba si dos palabras son anagramas (formadas por las mismas letras en
+       diferente orden)
+
+    Args:
+        pal1 (str): Primera palabra
+        pal2 (str): Segunda palabra
+
+    Returns:
+        str: Mensaje indicando si son o no anagramas
+    """
+   
+   # Ordenamos las palabras convertidas a minuscula para compararlas
+    pal1_ordenada = sorted(pal1.lower())
+    pal2_ordenada = sorted(pal2.lower())
+    # Si las listas ordenadas coinciden, son anagramas
+    if pal1_ordenada == pal2_ordenada:
+        return f"Las palabras {pal1} y {pal2} son anagramas"
+    else:
+        return f"Las palabras {pal1} y {pal2} no son anagramas"
+
+print(son_anagrama("roma", "amor"),"\n")    
 
 # 31.- Crea una función que solicite al usuario ingresar una lista de nombres y luego solicite un nombre para buscar en
 # esa lista. Si el nombre está en la lista, se imprime un mensaje indicando que fue encontrado, de lo contrario, se
 # lanza una excepción.
 
+def buscar_nombre():
+    """Solicita al usuario una lista de nombres separados por comas, y un nombre a buscar. 
+       Se el nombre está en la lista, muestra mensaje indicando que fue encontrado,
+       Si no está en la lista, lanza una excepción
+    """
+    
+    # Solicitamos los nombres y los separamos por comas para crear la lista
+    ent_usuario = input("Ingrese una lista de nombres separados por comas: ")
+    lista = [nombre.strip() for nombre in ent_usuario.split(",")]
+    
+    #Solicitamos el nombre a buscar en la lista
+    nombre = input("Ingrese un nombre: ")
+    if nombre in lista:
+        print(f"Se ha encontrado el nombre: {nombre} en la lista: {lista}","\n")
+    else:
+        #Lanzamos una excepcion si no se encuentra
+        raise ValueError(f"No se ha encontrado el nombre: {nombre} en la lista: {lista}","\n")
+
+buscar_nombre()
+
 # 32. Crea una función que tome un nombre completo y una lista de empleados, busque el nombre completo en la lista y
 # devuelve el puesto del empleado si está en la lista, de lo contrario, devuelve un mensaje indicando que la persona
 # no trabaja aquí.
 
+def info_empleado(nombre_buscado, lista_empleados):
+    """Busca nombre completo de un empleado en una lista y devuelve su puesto si lo encuentra
+
+    Args:
+        nombre_empleado (str): Nombre completo a buscar
+        lista_empleados (list): Lista de diccionarios con keys 'nombre' y 'puesto'
+    Returns: 
+        (str):Mensaje indicando el puesto
+    """
+    for empleado in lista_empleados:
+        if empleado['nombre'].lower() == nombre_buscado.lower():
+            return f"{nombre_buscado} trabaja como: {empleado['puesto']}"
+    return f"Para  {nombre_buscado} no tenemos información relativa a su puesto "
+
+# Lista de datos de empleados y sus puestos
+empleados = [
+    {"nombre": "Ana Pérez", "puesto": "Diseñadora"},
+    {"nombre": "Luis Gómez", "puesto": "Data Analyst"},
+    {"nombre": "Marta Ríos", "puesto": "Gerente de Ventas"}
+]
+
+# Prueba de la función
+nombre = input("Introduce el nombre completo a buscar: ")
+print(info_empleado(nombre, empleados), "\n")
 
 # 33. Crea una función lambda que sume elementos correspondientes de dos listas dadas.
 
