@@ -556,7 +556,14 @@ print(info_empleado(nombre, empleados), "\n")
 
 # 33. Crea una función lambda que sume elementos correspondientes de dos listas dadas.
 
+#Definimos ambas listas
+lista_a = [2, 3, 4, 5, 6 ]
+lista_b =[10, 20, 30, 40, 50]
 
+# Usamos map() para aplicar una funcion lambda que suma los elementos de ambas listas
+# Con list() convertimos a lista el resultado de la suma de ambas listas
+suma_de_listas = list(map(lambda x, y : x + y ,lista_a,lista_b))
+print(suma_de_listas)
 
 # 34. Crea la clase Arbol , define un árbol genérico con un tronco y ramas como atributos. Los métodos disponibles son:
 #              crecer_tronco , nueva_rama , crecer_ramas , quitar_rama e info_arbol . 
@@ -577,6 +584,97 @@ print(info_empleado(nombre, empleados), "\n")
                     # 6. Retirar la rama situada en la posición 2.
                     # 7. Obtener información sobre el árbol.
 
+class Arbol:
+     """  
+     Clase que representa un árbol genérico con un tronco y ramas.
+     Permite crecer el tronco y las ramas, añadir o quitar ramas, 
+     y obtener información del estado actual del árbol.
+     """
+     
+     def __init__(self):
+          """
+          Inicializa un árbol con un tronco de longitud 1 
+          y una lista vacía de ramas.
+          """
+          
+          self.tronco = 1
+          self.ramas = []
+          
+     def crecer_tronco(self):
+          """
+          Incrementa la longitud del tronco en 1 unidad.
+        
+          Returns:
+               str: Mensaje indicando la nueva longitud del tronco.
+          """
+          
+          self.tronco += 1
+          return f"El tronco ha crecido, ahora mide {self.tronco}"
+     
+     def nueva_rama(self):
+          """
+          Dñade una nueva rama al arbol con longitud inicial 1.
+          """
+          
+          self.ramas.append(1)
+     
+     def crecer_ramas(self):
+          """
+          Incrementa la longitud de todas las ramas existentes en 1 unidad.
+        
+          Returns:
+               list: Lista con las nuevas longitudes de las ramas.
+          """
+          
+          self.ramas = [rama + 1 for rama in self.ramas]
+          return self.ramas
+     
+     def quitar_rama(self, pos):
+          """
+          Elimina la rama situada en la posición 'pos' 
+        
+          Args:
+               pos (int): Índice de la rama a eliminar.
+        
+          Returns:
+               list: Lista actualizada de longitudes de ramas.
+          """
+          self.ramas.pop(pos)
+          return self.ramas
+     
+     def info_arbol(self):
+          """
+          Devuelve información sobre la longitud del tronco,
+          el número de ramas y las longitudes de cada rama.
+        
+          Returns:
+               str: Descripción del estado actual del árbol.
+          """
+          
+          info = (
+               f"El arbol tiene un tronco cuya medida es {self.tronco},\n"
+               f"con {len(self.ramas)} ramas,\n"
+               f"y cada una de las ramas mide {self.ramas}")
+          return info
+
+# Crear un árbol.
+arbol = Arbol()
+
+# 2. Añadir una nueva rama al árbol.
+print(arbol.crecer_tronco())
+
+# 3. Añadir una nueva rama al árbol.
+arbol.nueva_rama()
+
+# 4. Hacer crecer todas las ramas del árbol una unidad
+arbol.crecer_ramas()
+# 5. Añadir dos nuevas ramas al árbol..
+arbol.nueva_rama()
+arbol.nueva_rama()
+# 6. Retirar la rama situada en la posición 2.
+arbol.quitar_rama(2)
+# 7. Obtener información sobre el árbol.
+print(arbol.info_arbol())
 
 
 
@@ -597,8 +695,92 @@ print(info_empleado(nombre, empleados), "\n")
                     # 3. Hacer una transferencia de 80 unidades desde "Bob" a "Alicia".
                     # 4. Retirar 50 unidades de saldo a "Alicia".
 
+class UsuarioBanco:
+    """  
+    Clase que representa a un usuario de un banco con su nombre, saldo
+    y si tiene o no cuenta corriente.
+    """
+ 
+    def __init__(self, nombre, saldo, cuenta_corriente):
+        """Inicializa nuevo usuario
 
+        Args:
+            nombre (str): Nombre del usuario
+            saldo (float): Saldo inicial de la cuenta
+            cuenta_corriente (bool): True si tiene cuenta corriente,False si no la tiene
+        """
+  
+        self.nombre = nombre
+        self.saldo = saldo
+        self.cuenta_corriente = cuenta_corriente
 
+    def retirar_dinero(self, cantidad):
+        """Intenta retirar una cantidad de dinero del saldo del usuario.
+
+        Args:
+            cantidad (float): Cantidad de dinero a retirar
+        """
+      
+        try:
+            if cantidad <= 0:
+                print(" La cantidad a retirar debe ser positiva.")
+            elif cantidad > self.saldo:
+                print(f" Saldo insuficiente para retirar {cantidad}. Saldo actual: {self.saldo}")
+            else:
+                self.saldo -= cantidad
+                print(f" {self.nombre} ha retirado {cantidad}. Saldo actual: {self.saldo}")
+        except:
+            print("Error al intentar retirar dinero.")
+        
+    def transferir_dinero(self, usuario_destino, cantidad):
+        """Transfiere una cantidad desde este usuario hacia otro.
+
+        Args:
+            usuario_destino (UsuarioBanco): Usuario que recibirá la cantidad 
+            cantidad (flaot): Cantidad a transferir
+        """
+        try:
+            if cantidad <= 0:
+                print(" La cantidad a transferir debe ser positiva.")
+            elif cantidad > self.saldo:  
+                print(F"Saldo insuficiente, saldo actual {self.saldo}")
+            else:
+                self.saldo -= cantidad
+                usuario_destino.saldo += cantidad
+                print(f" Se han transferido {cantidad} de {self.nombre} a {usuario_destino.nombre}.")
+                print(f" Nuevo saldo de {self.nombre}: {self.saldo}")
+                print(f"Saldo de {usuario_destino.nombre} = {usuario_destino.saldo}")
+        except:
+            print("Error en la transferencia.")  
+
+    def agregar_dinero(self, cantidad):
+        """Agrega una cantidad al saldo del usuario
+
+        Args:
+            cantidad (float): Cantidad a agregar.
+        """
+        try:
+            if cantidad <= 0:
+                print(f"La cantidad debe ser positiva")
+            else:
+                self.saldo += cantidad
+                print(f"{self.nombre} ha agregado {cantidad} al saldo")
+                print(f"Nuevo saldo {self.saldo}")
+        except:
+            print(" Ha ocurrido un error al internter agregar saldo")
+        
+# 1. Crear dos usuarios: "Alicia" con saldo inicial de 100 y "Bob" con saldo inicial de 50, ambos con cuenta corriente.
+usuario_alicia = UsuarioBanco("Alicia", 100, True)
+usuario_bob = UsuarioBanco("Bob", 50, True)
+
+# 2. Agregar 20 unidades de saldo de "Bob".
+usuario_bob.agregar_dinero(20)
+
+# 3. Hacer una transferencia de 80 unidades desde "Bob" a "Alicia".
+usuario_bob.transferir_dinero(usuario_alicia, 80)
+
+# 4. Retirar 50 unidades de saldo a "Alicia".
+usuario_alicia.retirar_dinero(50)
 
 
 
@@ -619,12 +801,92 @@ print(info_empleado(nombre, empleados), "\n")
                     # número de argumentos variable según la opción indicada.
 # Caso de uso:
                     # Comprueba el funcionamiento completo de la función procesar_texto
-                    
-                    
-                    
+    
+def contar_palabras(texto):
+     """Cuenta las veces que aparece una palabra en el texto dado.
+
+     Args:
+         texto (str): Cadena de texto a analizar.
+
+     Returns:
+         dict: diccionario con las palabras como claves y el número de apariciones en valores.
+     """
+     conteo_palabras = {}
+     for palabra in texto.split():
+          if palabra in conteo_palabras:
+               conteo_palabras[palabra] += 1
+          else:
+               conteo_palabras[palabra] = 1
+     return conteo_palabras
+
+
+def reemplazar_palabras(texto, palabra_original, palabra_nueva):
+     """Reemplaza una palabra del texto por otra palabra
+
+     Args:
+         texto (str): Texto donde realizar el reemplazo.
+         palabra_original (str): Palabra a reemplazar.
+         palabra_nueva (str): Palabra que reemplaza a la original del texto.
+
+     Returns:
+         str: Texto con las palabras reemplazadas.
+     """
+     return texto.replace(palabra_original, palabra_nueva)
+
+
+def eliminar_palabra(texto, palabra_eliminar):
+     """Elimina las apariciones de una palabra en un texto dado.
+
+     Args:
+         texto (str): Texto donde eliminar la palabra.
+         palabra_eliminar (str): Palabra a eliminar.
+
+     Returns:
+         str: Texto sin la palabra a elininar.
+     """
+     return texto.replace(palabra_eliminar, "")
+
+
+def procesar_texto(texto, opcion,*args):
+     """Procesa un texto según la opcion: contar palabras, reemplazar palabras o eliminar palabras.
+
+     Args:
+         texto (str): Texto sobre el que se realizara la operación indicada.
+         opcion (str): Opcion a realizar: "contar", "reemplazar" o "eliminar"
+
+     Returns:
+         dict o str: Será un diccionario con el conteo de palabras o un string con el texto modificado.
+     """
+     if opcion == "contar":
+          return contar_palabras(texto)
+     elif opcion == "reemplazar":
+          return reemplazar_palabras(texto, *args)
+     elif opcion == "eliminar":
+          return eliminar_palabra(texto, *args)
+     else:
+          return "Opción no válida"                
+  
                     
                     
 # 38. Genera un programa que nos diga si es de noche, de día o tarde según la hora proporcionada por el usuario.
+
+def momento_dia(hora):
+    """Determina si es dia, tarde o noche según la hora facilitada.
+
+    Args:
+        hora (int): Hora en formato 24 horas (0 a 23).
+
+    Returns:
+        str: mensaje indicando momento del dia o mensaje de error si no es una hora válida.
+    """
+    if hora not in range(24):
+        return "Hora no válida, debe estar entre 0 y 23"
+    if hora in range(7,13):
+        return "Es de dia"
+    elif hora in range(13,21):
+        return "Es por la tarde"
+    else:
+        return "Es de noche"
 
 
 
@@ -636,14 +898,70 @@ print(info_empleado(nombre, empleados), "\n")
           # - 80 - 89 muy bien
           # - 90 - 100 excelente
 
+def calificacion(nota):
+    """Devuelve la calificación en base a una nota dada.
 
+    Args:
+        nota (int): Nota para analizar calificación.
+
+    Returns:
+        str: Mensaje con la calificación obtenida.
+    """
+    if nota not in range(0, 101):
+        return "Nota no válida, debe estar entre 0 y 100"
+    if nota in range(0, 70):
+        return "La calificacion obtenida es: Insuficiente"
+    elif nota in range(70,80):
+        return "La calificacion obtenida es: Bien"
+    elif nota in range(80, 90):
+        return "La calificacion obtenida es: Muy Bien"
+    else:
+        return "La calificacion obtenida es: Excelente"
 
 
 
 # 40. Escribe una función que tome dos parámetros: figura (una cadena que puede ser "rectangulo" , "circulo" o
 # "triangulo" ) y datos (una tupla con los datos necesarios para calcular el área de la figura).
 
+import math
 
+def calcular_area(figura, datos):
+    """Calcula el área de una figura geométrica.
+
+    Args:
+        figura (str): Tipo de figura ("rectangulo", "circulo" o "triangulo").
+        datos (tuple): Datos necesarios para calcular el área:
+                       - Rectángulo: (base, altura)
+                       - Círculo: (radio,)
+                       - Triángulo: (base, altura)
+
+    Returns:
+        float: Área calculada de la figura.
+        str: Mensaje de error si la figura no es válida o los datos no son correctos.
+    """
+    try:
+        if figura == "rectangulo":
+            base, altura = datos
+            if base <= 0 or altura <= 0:
+                return "Los valores deben ser positivos"
+            return base * altura
+
+        elif figura == "circulo":
+            (radio,) = datos
+            if radio <= 0:
+                return "El radio debe ser positivo"
+            return math.pi * radio ** 2
+
+        elif figura == "triangulo":
+            base, altura = datos
+            if base <= 0 or altura <= 0:
+                return "Los valores deben ser positivos"
+            return (base * altura) / 2
+
+        else:
+            return "Figura no válida. Usa 'rectangulo', 'circulo' o 'triangulo'."
+    except (ValueError, TypeError):
+        return "Error en los datos. Revisa que sean números y la cantidad correcta."
 
 
 # 41. En este ejercicio, se te pedirá que escribas un programa en Python que utilice condicionales para determinar el
@@ -658,7 +976,37 @@ print(info_empleado(nombre, empleados), "\n")
                # 6. Recuerda utilizar estructuras de control de flujo como if, elif y else para llevar a cabo estas acciones en tu
                # programa de Python.
                
-               
+def calcular_importe():
+    """Solicita información sobre el precio y un posible cupón y calcula el precio final.
 
+    Returns:
+        str: Mensaje con el resultado de la funcion
+    """
+    try:
+        #Solicitamos y converimos el precio a float
+        precio_original = float(input("Ingrese el precio del artículo: "))
+        #Preguntamos si tiene descuento y lo pasamos a minusculas
+        consulta = input("¿Tiene un cupón descuento? si / no: ").lower()
 
-
+        if consulta == "si":
+            #Si tiene cupon, pedimos importe y pasamos a float
+            descuento = float(input("Ingrese el valor del cupón de descuento: "))
+            if descuento > 0:
+                #Si el descuento es positivo lo aplicamos al precio final
+                precio_final = precio_original - descuento
+                return f"El precio final con descuento es: {precio_final:}€"
+            elif descuento == 0:
+                #Si es cero, no se aplica y se informa del precio final
+                print("El descuento es cero, no se aplica ningún descuento.")
+                return f"El precio final es: {precio_original}€"
+            else:
+                #Si es negativo se informa que no es válido
+                return "El descuento no puede ser negativo."
+        elif consulta == "no":
+            #Si no tiene cupon, devuelve el precio original sin descuento
+            return f"No se aplica descuento. El precio final es: {precio_original}€"
+        else:
+            #Se informa si la respuesta no es válida
+            return "Respuesta no válida. Debe responder 'si' o 'no'."
+    except ValueError:
+        return "Entrada no válida. Introduce valores numéricos para los precios."
